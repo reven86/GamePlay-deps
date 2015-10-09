@@ -43,14 +43,15 @@ add_subdirectory(Box2D-2.3.0)
 
 add_subdirectory(tinyxml2-2.1.0)
 add_subdirectory(lua-5.2.3)
+add_subdirectory(yaml-0.1.5)
 
 if (NOT APPLE)
     # We can safely skip GLEW and OpenAL for any Apple based platforms
     add_subdirectory(glew-1.10.0)
-    add_subdirectory(openal-1.16.0)
+    #add_subdirectory(openal-1.16.0)
 endif(NOT APPLE)
 
-# zlib must be built before png and curl
+# zlib must be built before the and curl
 add_subdirectory(zlib-1.2.8)
 add_subdirectory(png-1.6.15)
 
@@ -77,6 +78,7 @@ set(BUILD_TARGETS
     zlibstatic
     lua
     tinyxml2static
+    yaml
 )
 
 if (NOT APPLE)
@@ -110,11 +112,17 @@ elseif(APPLE)
         OUTPUT ${GAMEPLAY_DEPS}
         COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/cmake/xcode-amalgamate.sh ${LIBRARY_OUTPUT_PATH}
     )
-else()
+elseif(WIN32)
     # Windows
     add_custom_command(
         OUTPUT ${GAMEPLAY_DEPS}
 	COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/cmake/msvc-amalgamate.bat ${LIBRARY_OUTPUT_PATH}/${CMAKE_CFG_INTDIR}
+    )
+else()
+    # Emscripten
+    add_custom_command(
+        OUTPUT ${GAMEPLAY_DEPS}
+	COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/cmake/emscripten-amalgamate.sh ${CMAKE_AR} ${LIBRARY_OUTPUT_PATH}
     )
 endif(LINUX OR ANDROID)
 

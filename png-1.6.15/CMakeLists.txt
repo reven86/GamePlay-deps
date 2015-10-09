@@ -30,7 +30,7 @@ set(SKIP_INSTALL_LIBRARIES 1)
 set(SKIP_INSTALL_EXECUTABLES 1)
 set(SKIP_INSTALL_EXPORT 1)
 
-if(NOT WIN32)
+if(0)#NOT WIN32)
   find_library(M_LIBRARY
     NAMES m
     PATHS /usr/lib /usr/local/lib
