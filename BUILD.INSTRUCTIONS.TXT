@@ -1,0 +1,4 @@
+WIN32:
+
+manually compile curl, see curl-7.45.0/winbuild
+cmake

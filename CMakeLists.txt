@@ -54,9 +54,16 @@ endif(NOT APPLE)
 # zlib must be built before png and curl
 add_subdirectory(zlib-1.2.8)
 add_subdirectory(png-1.6.15)
+add_subdirectory(libzip-1.0.1a)
 
 if(NOT WIN32)
     add_subdirectory(curl-7.45.0)
+else()
+    if ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+        set(CURLDIR "..\\curl-7.45.0\\builds\\libcurl-vc-x64-release-static-ipv6-sspi-winssl\\lib")
+    else()
+        set(CURLDIR "..\\curl-7.45.0\\builds\\libcurl-vc-x64-debug-static-ipv6-sspi-winssl\\lib")
+    endif("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 endif(NOT WIN32)
 
 # Ogg needs to be built before vorbis
@@ -79,6 +86,7 @@ set(BUILD_TARGETS
     lua
     tinyxml2static
     yaml
+    zip
 )
 
 if (NOT APPLE)
@@ -114,7 +122,7 @@ elseif(WIN32)
     # Windows
     add_custom_command(
         OUTPUT ${GAMEPLAY_DEPS}
-	COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/cmake/msvc-amalgamate.bat ${LIBRARY_OUTPUT_PATH}/${CMAKE_CFG_INTDIR}
+	COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/cmake/msvc-amalgamate.bat ${LIBRARY_OUTPUT_PATH}/${CMAKE_CFG_INTDIR} ${CURLDIR}
     )
 else()
     # Emscripten
