@@ -1,3 +1,7 @@
 build/
 out/
 *.swp
+/curl-7.45.0/builds
+/curl-7.45.0/winbuild/vc120.idb
+/curl-7.45.0/winbuild/CURL_OBJS.inc
+/curl-7.45.0/winbuild/LIBCURL_OBJS.inc

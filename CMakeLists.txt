@@ -48,16 +48,16 @@ add_subdirectory(yaml-0.1.5)
 if (NOT APPLE)
     # We can safely skip GLEW and OpenAL for any Apple based platforms
     add_subdirectory(glew-1.10.0)
-    #add_subdirectory(openal-1.16.0)
+    add_subdirectory(openal-1.16.0)
 endif(NOT APPLE)
 
-# zlib must be built before the and curl
+# zlib must be built before png and curl
 add_subdirectory(zlib-1.2.8)
 add_subdirectory(png-1.6.15)
 
-if(NOT WIN32 AND BUILD_EXTRA_LIBS)
-    add_subdirectory(curl-7.39.0)
-endif(NOT WIN32 AND BUILD_EXTRA_LIBS)
+if(NOT WIN32)
+    add_subdirectory(curl-7.45.0)
+endif(NOT WIN32)
 
 # Ogg needs to be built before vorbis
 add_subdirectory(ogg-1.3.2)
@@ -90,11 +90,9 @@ if (NOT APPLE)
     ENDIF(WIN32)
 endif(NOT APPLE)
 
-IF(BUILD_EXTRA_LIBS)
-    if(NOT WIN32)
-        list(APPEND BUILD_TARGETS libcurl)
-    endif(NOT WIN32)
-ENDIF(BUILD_EXTRA_LIBS)
+if(NOT WIN32)
+    list(APPEND BUILD_TARGETS libcurl)
+endif(NOT WIN32)
 
 if(WIN32)
     set(GAMEPLAY_DEPS gameplay-deps.lib)
