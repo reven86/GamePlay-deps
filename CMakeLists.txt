@@ -44,6 +44,7 @@ add_subdirectory(Box2D-2.3.0)
 add_subdirectory(tinyxml2-2.1.0)
 add_subdirectory(lua-5.2.3)
 add_subdirectory(yaml-0.1.5)
+add_subdirectory(libsigc++-2.6.1)
 
 if (NOT APPLE)
     # We can safely skip GLEW and OpenAL for any Apple based platforms
@@ -87,6 +88,7 @@ set(BUILD_TARGETS
     tinyxml2static
     yaml
     zip
+    sigc++
 )
 
 if (NOT APPLE)

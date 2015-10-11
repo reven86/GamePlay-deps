@@ -1,4 +1,4 @@
-build/
+build_*/
 out/
 *.swp
 /curl-7.45.0/builds
