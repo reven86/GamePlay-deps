@@ -58,6 +58,6 @@ ENDIF(CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
 
 add_library(sigc++ STATIC ${SOURCES})
 
-install(TARGETS sigc++ RUNTIME DESTINATION bin ARCHIVE DESTINATION lib)
-install(FILES ${HEADERS}  DESTINATION include/sigc++-2.0/sigc++)
-install(FILES ${CMAKE_BINARY_DIR}/sigc++config.h  DESTINATION lib/sigc++-2.0/include)
+#install(TARGETS sigc++ RUNTIME DESTINATION bin ARCHIVE DESTINATION lib)
+#install(FILES ${HEADERS}  DESTINATION include/sigc++-2.0/sigc++)
+#install(FILES ${CMAKE_BINARY_DIR}/sigc++config.h  DESTINATION lib/sigc++-2.0/include)

@@ -4,7 +4,6 @@ add_definitions(-DHAVE_CONFIG_H)
 include( CheckIncludeFile )
 
 if(WIN32)
-    set(SHARED_LIB_EXT dll)
     if(MSVC)
         set( CMAKE_REQUIRED_INCLUDES ${CMAKE_INCLUDE_PATH} ${CMAKE_INCLUDE_PATH}/msvc )
     else(MSVC)
