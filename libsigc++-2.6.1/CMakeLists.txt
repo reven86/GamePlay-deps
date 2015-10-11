@@ -16,4 +16,6 @@ if(WIN32)
     add_definitions(-Dnoexcept=)
 endif(WIN32)
 
+add_definitions(-std=c++11)
+
 add_subdirectory(sigc++)

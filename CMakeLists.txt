@@ -6,6 +6,11 @@ IF(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND NOT ANDROID)
     SET(LINUX 1)
 ENDIF(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND NOT ANDROID)
 
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Emscripten")
+    SET(EMSCRIPTEN 1)
+    SET(BUILD_SHARED_LIBS 1)
+endif(${CMAKE_SYSTEM_NAME} STREQUAL "Emscripten")
+
 if(NOT ANDROID AND NOT IOS)
     # Skip any introspection for cross-compiling targets
     include(${PROJECT_SOURCE_DIR}/cmake/TargetArch.cmake)
@@ -49,7 +54,9 @@ add_subdirectory(libsigc++-2.6.1)
 if (NOT APPLE)
     # We can safely skip GLEW and OpenAL for any Apple based platforms
     add_subdirectory(glew-1.10.0)
-    add_subdirectory(openal-1.16.0)
+    if (NOT EMSCRIPTEN)
+        add_subdirectory(openal-1.16.0)
+    endif(NOT EMSCRIPTEN)
 endif(NOT APPLE)
 
 # zlib must be built before png and curl
@@ -58,9 +65,13 @@ add_subdirectory(png-1.6.15)
 add_subdirectory(libzip-1.0.1a)
 
 if(NOT WIN32)
-    add_subdirectory(curl-7.45.0)
+    if(EMSCRIPTEN)
+        option(CMAKE_USE_OPENSSL "" OFF)
+    else()
+        add_subdirectory(curl-7.45.0)
+    endif(EMSCRIPTEN)
 else()
-    if ("${CMAKE_BUILD_TYPE}" MATCHES ".*Rel.*")
+    if (${CMAKE_BUILD_TYPE} MATCHES ".*Rel.*")
         set(CURLDIR "..\\curl-7.45.0\\builds\\libcurl-vc-x64-release-static-ipv6-sspi-winssl\\lib")
     else()
         set(CURLDIR "..\\curl-7.45.0\\builds\\libcurl-vc-x64-debug-static-ipv6-sspi-winssl\\lib")

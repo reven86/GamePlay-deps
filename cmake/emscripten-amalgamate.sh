@@ -26,20 +26,19 @@ echo "Using ar : $AR"
 echo "Amalgamating target static libs $TARGET"
 
 cd $TARGET
-mkdir tmp
+#mkdir tmp
 rm -f libgameplay-deps.a
-mv *.a ./tmp
+#mv *.a ./tmp
 
-# Build an MRI script file
-echo "create libgameplay-deps.a"
-for file in ./tmp/* ; do
-    if [ -e "$file" ];
-    then
-	$AR r libgameplay-deps.a $file
-        echo "addlib $file"
-    fi
-done
-echo "end"
+#echo "create libgameplay-deps.a"
+#for file in ./tmp/* ; do
+#    if [ -e "$file" ];
+#    then
+#	$AR r libgameplay-deps.a $file
+#        echo "addlib $file"
+#    fi
+#done
+#echo "end"
 
 # Clean up
 #emscripten does not support amalgamated archives so leave reps as they are

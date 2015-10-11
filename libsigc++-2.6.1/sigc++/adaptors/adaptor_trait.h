@@ -21,7 +21,7 @@ namespace sigc {
     #define SIGC_WORKAROUND_OPERATOR_PARENTHESES operator()
     #define SIGC_TEMPLATE_SPECIALIZATION_OPERATOR_OVERLOAD
   #else
-    #define SIGC_WORKAROUND_OPERATOR_PARENTHESES sun_forte_workaround
+    #define SIGC_WORKAROUND_OPERATOR_PARENTHESES template sun_forte_workaround
   #endif
 #endif
 
