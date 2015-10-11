@@ -26,6 +26,8 @@ echo "Using libtool : $LIBTOOL"
 echo "Amalgamating target static libs $TARGET"
 
 cd $TARGET
+# Clean up
+rm -rf ./tmp
 mkdir tmp
 
 # Remove any old library still hanging around
@@ -37,8 +39,5 @@ mv *.a ./tmp
 #   xcrun -sdk iphoneos lipo -info libgameplay-deps.a
 # To validate all the correct architectures are present.
 $LIBTOOL -static `find . -name "*.a" | xargs` -o libgameplay-deps.a
-
-# Clean up
-rm -rf ./tmp
 
 cd $CWD
