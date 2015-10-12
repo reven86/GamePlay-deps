@@ -17,5 +17,6 @@ if(WIN32)
 endif(WIN32)
 
 add_definitions(-std=c++11)
+add_definitions(-stdlib=libc++)
 
 add_subdirectory(sigc++)
