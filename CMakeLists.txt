@@ -9,7 +9,13 @@ ENDIF(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND NOT ANDROID)
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Emscripten")
     SET(EMSCRIPTEN 1)
     SET(BUILD_SHARED_LIBS 1)
+else()
+    SET(BUILD_SHARED_LIBS 0)
 endif(${CMAKE_SYSTEM_NAME} STREQUAL "Emscripten")
+
+MESSAGE("Platform: ${CMAKE_SYSTEM_NAME}")
+MESSAGE("Build shared: ${BUILD_SHARED_LIBS}")
+MESSAGE("Configuration: ${CMAKE_BUILD_TYPE}")
 
 if(NOT ANDROID AND NOT IOS)
     # Skip any introspection for cross-compiling targets
@@ -40,7 +46,7 @@ ENDIF(NOT WIN32)
 file(MAKE_DIRECTORY ${LIBRARY_OUTPUT_PATH})
 message(STATUS "Directory: ${LIBRARY_OUTPUT_PATH}")
 
-set(CMAKE_OSX_DEPLOYMENT_TARGET "10.7")
+#set(CMAKE_OSX_DEPLOYMENT_TARGET "10.7")
 
 IF(BUILD_EXTRA_LIBS)
     add_subdirectory(sqlite-3.8.7)
@@ -52,6 +58,7 @@ add_subdirectory(tinyxml2-2.1.0)
 add_subdirectory(lua-5.2.3)
 add_subdirectory(yaml-0.1.5)
 add_subdirectory(libsigc++-2.6.1)
+add_subdirectory(jpeg-8d)
 
 if (NOT APPLE)
     # We can safely skip GLEW and OpenAL for any Apple based platforms
@@ -102,6 +109,7 @@ set(BUILD_TARGETS
     yaml
     zip
     sigc++
+    jpeg
 )
 
 if (NOT APPLE)
