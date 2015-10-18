@@ -5,3 +5,4 @@ out/
 /curl-7.45.0/winbuild/vc120.idb
 /curl-7.45.0/winbuild/CURL_OBJS.inc
 /curl-7.45.0/winbuild/LIBCURL_OBJS.inc
+/freetype-2.4.5/builds
