@@ -40,7 +40,9 @@ endif(NOT ANDROID AND NOT IOS)
 IF(NOT WIN32)
     # For Windows, let the user pick since we need to generate both Debug and
     # Release variants of all the libs.
-    SET(CMAKE_BUILD_TYPE "Release")
+    IF(NOT DEFINED CMAKE_BUILD_TYPE)
+        SET(CMAKE_BUILD_TYPE "Release")
+    ENDIF(NOT DEFINED CMAKE_BUILD_TYPE)
 ENDIF(NOT WIN32)
 
 file(MAKE_DIRECTORY ${LIBRARY_OUTPUT_PATH})
