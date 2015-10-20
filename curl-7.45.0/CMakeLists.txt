@@ -201,6 +201,7 @@ if(ENABLE_IPV6 AND NOT WIN32)
 endif()
 
 option(ENABLE_MANUAL "to provide the built-in manual" ON)
+set(ENABLE_MANUAL OFF)
 unset(USE_MANUAL CACHE) # TODO: cache NROFF/NROFF_MANOPT/USE_MANUAL vars?
 if(ENABLE_MANUAL)
   find_program(NROFF NAMES gnroff nroff)
@@ -298,6 +299,7 @@ endif()
 option(CMAKE_USE_OPENSSL "Use OpenSSL code. Experimental" ON)
 mark_as_advanced(CMAKE_USE_OPENSSL)
 
+set(CMAKE_USE_OPENSSL OFF)
 set(USE_OPENSSL OFF)
 set(HAVE_LIBCRYPTO OFF)
 set(HAVE_LIBSSL OFF)
@@ -458,6 +460,7 @@ endif()
 #libSSH2
 option(CMAKE_USE_LIBSSH2 "Use libSSH2" ON)
 mark_as_advanced(CMAKE_USE_LIBSSH2)
+set(CMAKE_USE_LIBSSH2 OFF)
 set(USE_LIBSSH2 OFF)
 set(HAVE_LIBSSH2 OFF)
 set(HAVE_LIBSSH2_H OFF)
