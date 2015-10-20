@@ -96,7 +96,7 @@ typedef signed long long zip_int64_t;
 typedef uint64_t zip_uint64_t;
 #elif defined(HAVE___INT64_LIBZIP)
 typedef unsigned __int64 zip_uint64_t;
-#elif defined(LONG_LIBZIP) && LONG_LONG_LIBZIP == 8
+#elif defined(LONG_LIBZIP) && LONG_LIBZIP == 8
 typedef unsigned long zip_uint64_t;
 #elif defined(LONG_LONG_LIBZIP) && LONG_LONG_LIBZIP == 8
 typedef unsigned long long zip_uint64_t;
