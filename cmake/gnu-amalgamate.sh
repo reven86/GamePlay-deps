@@ -36,7 +36,7 @@ echo "create libgameplay-deps.a" >$MRI
 for file in ./tmp/* ; do
     if [ -e "$file" ];
     then
-        echo "addlib $file" >>$MRI
+        echo "addlib \"$file\"" >>$MRI
     fi
 done
 echo "save" >>$MRI

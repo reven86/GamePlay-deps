@@ -2,3 +2,31 @@ WIN32:
 
 manually compile curl, see curl-7.45.0/winbuild
 cmake
+
+MACOSX:
+cmake -DCURL_OSX_DEPLOYTMENT_TARGET=10.7 ..
+make
+
+IOS:
+export IPHONEOS_DEPLOYMENT_TARGET=7.0
+cmake -DCMAKE_TOOLCHAIN_FILE=../cmake/ios.toolchain.cmake -DIOS_PLATFORM=OS ..
+make
+
+IOS Simulator:
+#curl is not working!!!
+cmake -DCMAKE_TOOLCHAIN_FILE=../cmake/ios.toolchain.cmake -DIOS_PLATFORM=SIMULATOR ..
+make
+
+Android armeabi-v7a:
+export ANDROID_NDK=/path/to/ndk
+cmake -DCMAKE_TOOLCHAIN_FILE=../cmake/android.toolchain.cmake -DCMAKE_BUILD_TYPE=Release -DANDROID_ABI=armeabi-v7a -DANDROID_FORCE_ARM_BUILD=ON -DANDROID_STL=gnustl_static -DANDROID_STL_FORCE_FEATURES=ON -DANDROID_NATIVE_API_LEVEL=android-12 ..
+make
+
+Android x86:
+export ANDROID_NDK=/path/to/ndk
+cmake -DCMAKE_TOOLCHAIN_FILE=../cmake/android.toolchain.cmake -DCMAKE_BUILD_TYPE=Release -DANDROID_ABI=x86 -DANDROID_FORCE_ARM_BUILD=ON -DANDROID_STL=gnustl_static -DANDROID_STL_FORCE_FEATURES=ON -DANDROID_NATIVE_API_LEVEL=android-12 ..
+make
+
+Emscripten:
+ecmake cmake -DCMAKE_BUILD_TYPE=MinSizeRel ..
+make

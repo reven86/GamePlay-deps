@@ -48,8 +48,6 @@ ENDIF(NOT WIN32)
 file(MAKE_DIRECTORY ${LIBRARY_OUTPUT_PATH})
 message(STATUS "Directory: ${LIBRARY_OUTPUT_PATH}")
 
-#set(CMAKE_OSX_DEPLOYMENT_TARGET "10.7")
-
 IF(BUILD_EXTRA_LIBS)
     add_subdirectory(sqlite-3.8.7)
 ENDIF(BUILD_EXTRA_LIBS)
@@ -76,9 +74,9 @@ add_subdirectory(png-1.6.15)
 add_subdirectory(libzip-1.0.1a)
 
 if(NOT WIN32)
-    if(NOT EMSCRIPTEN AND NOT IOS)
+    if(NOT EMSCRIPTEN)
     	add_subdirectory(curl-7.45.0)
-    endif(NOT EMSCRIPTEN AND NOT IOS)
+    endif(NOT EMSCRIPTEN)
 else()
     if (${CMAKE_BUILD_TYPE} MATCHES ".*Rel.*")
         set(CURLDIR "..\\curl-7.45.0\\builds\\libcurl-vc-x64-release-static-ipv6-sspi-winssl\\lib")
@@ -108,7 +106,7 @@ set(BUILD_TARGETS
     tinyxml2static
     yaml
     zip
-    sigc++
+    sigcpp
     jpeg
 )
 

@@ -878,6 +878,10 @@ foreach(CURL_TEST
   curl_internal_test_run(${CURL_TEST})
 endforeach(CURL_TEST)
 
+IF(IOS OR ANDROID)
+SET(HAVE_POSIX_STRERROR_R 1)
+ENDIF(IOS OR ANDROID)
+
 # Check for reentrant
 foreach(CURL_TEST
     HAVE_GETHOSTBYADDR_R_5
