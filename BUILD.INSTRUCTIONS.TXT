@@ -28,5 +28,5 @@ cmake -DCMAKE_TOOLCHAIN_FILE=../cmake/android.toolchain.cmake -DCMAKE_BUILD_TYPE
 make
 
 Emscripten:
-ecmake cmake -DCMAKE_BUILD_TYPE=MinSizeRel ..
+emcmake cmake -DCMAKE_BUILD_TYPE=MinSizeRel ..
 make
