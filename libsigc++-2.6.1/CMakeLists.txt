@@ -17,6 +17,8 @@ if(WIN32)
 endif(WIN32)
 
 add_definitions(-std=c++11)
-#add_definitions(-stdlib=libc++)
+IF(APPLE AND NOT IOS)
+add_definitions(-stdlib=libc++)
+ENDIF(APPLE AND NOT IOS)
 
 add_subdirectory(sigc++)
