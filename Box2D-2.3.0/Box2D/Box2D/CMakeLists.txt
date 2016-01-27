@@ -122,7 +122,7 @@ set(BOX2D_General_HDRS
 	Box2D.h
 )
 include_directories( ../ )
-add_definitions(-include "string.h")
+#add_definitions(-include "string.h")
 
 if(BOX2D_BUILD_SHARED)
 	add_library(Box2D_shared SHARED
