@@ -73,17 +73,9 @@ add_subdirectory(zlib-1.2.8)
 add_subdirectory(png-1.6.15)
 add_subdirectory(libzip-1.0.1a)
 
-if(NOT WIN32)
-    if(NOT EMSCRIPTEN)
-    	add_subdirectory(curl-7.45.0)
-    endif(NOT EMSCRIPTEN)
-else()
-    if (${CMAKE_BUILD_TYPE} MATCHES ".*Rel.*")
-        set(CURLDIR "..\\curl-7.45.0\\builds\\libcurl-vc-x64-release-static-ipv6-sspi-winssl\\lib")
-    else()
-        set(CURLDIR "..\\curl-7.45.0\\builds\\libcurl-vc-x64-debug-static-ipv6-sspi-winssl\\lib")
-    endif("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
-endif(NOT WIN32)
+if(NOT EMSCRIPTEN)
+    add_subdirectory(curl-7.45.0)
+endif(NOT EMSCRIPTEN)
 
 # Ogg needs to be built before vorbis
 add_subdirectory(ogg-1.3.2)
@@ -108,6 +100,7 @@ set(BUILD_TARGETS
     zip
     sigcpp
     jpeg
+    libcurl
 )
 
 if (NOT APPLE)
@@ -118,10 +111,6 @@ if (NOT APPLE)
         list(APPEND BUILD_TARGETS openal)
     ENDIF(WIN32)
 endif(NOT APPLE)
-
-if(NOT WIN32)
-    list(APPEND BUILD_TARGETS libcurl)
-endif(NOT WIN32)
 
 if(WIN32)
     set(GAMEPLAY_DEPS gameplay-deps.lib)
@@ -143,7 +132,7 @@ elseif(WIN32)
     # Windows
     add_custom_command(
         OUTPUT ${GAMEPLAY_DEPS}
-	COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/cmake/msvc-amalgamate.bat ${LIBRARY_OUTPUT_PATH}/${CMAKE_CFG_INTDIR} ${CURLDIR}
+	COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/cmake/msvc-amalgamate.bat ${LIBRARY_OUTPUT_PATH}/${CMAKE_CFG_INTDIR}
     )
 else()
     # Emscripten

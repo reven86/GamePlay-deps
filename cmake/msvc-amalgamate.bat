@@ -1,10 +1,8 @@
 set ROOTDIR=%CD%
 set LIBDIR=%1
-set CURLDIR=%2
 
-echo "Amalgamating target dir: %LIBDIR% curldir: %CURLDIR%"
+echo "Amalgamating target dir: %LIBDIR%"
 
-copy %CURLDIR%\*.lib %LIBDIR:/=\%
 cd %LIBDIR%
 rmdir /s /q "tmp\"
 mkdir tmp
