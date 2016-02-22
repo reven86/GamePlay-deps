@@ -74,6 +74,7 @@ add_subdirectory(png-1.6.15)
 add_subdirectory(libzip-1.0.1a)
 
 if(NOT EMSCRIPTEN)
+    add_subdirectory(openssl-cmake-1.0.1e)
     add_subdirectory(curl-7.45.0)
 endif(NOT EMSCRIPTEN)
 
@@ -100,6 +101,7 @@ set(BUILD_TARGETS
     zip
     sigcpp
     jpeg
+    ssl
     libcurl
 )
 
