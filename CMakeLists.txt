@@ -48,6 +48,8 @@ ENDIF(NOT WIN32)
 file(MAKE_DIRECTORY ${LIBRARY_OUTPUT_PATH})
 message(STATUS "Directory: ${LIBRARY_OUTPUT_PATH}")
 
+add_definitions(-include "string.h")
+
 IF(BUILD_EXTRA_LIBS)
     add_subdirectory(sqlite-3.8.7)
 ENDIF(BUILD_EXTRA_LIBS)
