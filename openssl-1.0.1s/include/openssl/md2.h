@@ -1,5 +1,5 @@
-/* crypto/cast/cast.h */
-/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)
+/* crypto/md/md2.h */
+/* Copyright (C) 1995-1997 Eric Young (eay@cryptsoft.com)
  * All rights reserved.
  *
  * This package is an SSL implementation written
@@ -56,50 +56,37 @@
  * [including the GNU Public Licence.]
  */
 
-#ifndef HEADER_CAST_H
-# define HEADER_CAST_H
+#ifndef HEADER_MD2_H
+# define HEADER_MD2_H
+
+# include <openssl/opensslconf.h>/* OPENSSL_NO_MD2, MD2_INT */
+# ifdef OPENSSL_NO_MD2
+#  error MD2 is disabled.
+# endif
+# include <stddef.h>
+
+# define MD2_DIGEST_LENGTH       16
+# define MD2_BLOCK               16
 
 #ifdef  __cplusplus
 extern "C" {
 #endif
 
-# include <openssl/opensslconf.h>
+typedef struct MD2state_st {
+    unsigned int num;
+    unsigned char data[MD2_BLOCK];
+    MD2_INT cksm[MD2_BLOCK];
+    MD2_INT state[MD2_BLOCK];
+} MD2_CTX;
 
-# ifdef OPENSSL_NO_CAST
-#  error CAST is disabled.
-# endif
-
-# define CAST_ENCRYPT    1
-# define CAST_DECRYPT    0
-
-# define CAST_LONG unsigned int
-
-# define CAST_BLOCK      8
-# define CAST_KEY_LENGTH 16
-
-typedef struct cast_key_st {
-    CAST_LONG data[32];
-    int short_key;              /* Use reduced rounds for short key */
-} CAST_KEY;
-
+const char *MD2_options(void);
 # ifdef OPENSSL_FIPS
-void private_CAST_set_key(CAST_KEY *key, int len, const unsigned char *data);
+int private_MD2_Init(MD2_CTX *c);
 # endif
-void CAST_set_key(CAST_KEY *key, int len, const unsigned char *data);
-void CAST_ecb_encrypt(const unsigned char *in, unsigned char *out,
-                      const CAST_KEY *key, int enc);
-void CAST_encrypt(CAST_LONG *data, const CAST_KEY *key);
-void CAST_decrypt(CAST_LONG *data, const CAST_KEY *key);
-void CAST_cbc_encrypt(const unsigned char *in, unsigned char *out,
-                      long length, const CAST_KEY *ks, unsigned char *iv,
-                      int enc);
-void CAST_cfb64_encrypt(const unsigned char *in, unsigned char *out,
-                        long length, const CAST_KEY *schedule,
-                        unsigned char *ivec, int *num, int enc);
-void CAST_ofb64_encrypt(const unsigned char *in, unsigned char *out,
-                        long length, const CAST_KEY *schedule,
-                        unsigned char *ivec, int *num);
-
+int MD2_Init(MD2_CTX *c);
+int MD2_Update(MD2_CTX *c, const unsigned char *data, size_t len);
+int MD2_Final(unsigned char *md, MD2_CTX *c);
+unsigned char *MD2(const unsigned char *d, size_t n, unsigned char *md);
 #ifdef  __cplusplus
 }
 #endif

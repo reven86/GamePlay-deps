@@ -1,4 +1,4 @@
-/* crypto/cast/cast.h */
+/* crypto/rc5/rc5.h */
 /* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)
  * All rights reserved.
  *
@@ -56,49 +56,57 @@
  * [including the GNU Public Licence.]
  */
 
-#ifndef HEADER_CAST_H
-# define HEADER_CAST_H
+#ifndef HEADER_RC5_H
+# define HEADER_RC5_H
+
+# include <openssl/opensslconf.h>/* OPENSSL_NO_RC5 */
 
 #ifdef  __cplusplus
 extern "C" {
 #endif
 
-# include <openssl/opensslconf.h>
-
-# ifdef OPENSSL_NO_CAST
-#  error CAST is disabled.
+# ifdef OPENSSL_NO_RC5
+#  error RC5 is disabled.
 # endif
 
-# define CAST_ENCRYPT    1
-# define CAST_DECRYPT    0
+# define RC5_ENCRYPT     1
+# define RC5_DECRYPT     0
 
-# define CAST_LONG unsigned int
+/* 32 bit.  For Alpha, things may get weird */
+# define RC5_32_INT unsigned long
 
-# define CAST_BLOCK      8
-# define CAST_KEY_LENGTH 16
+# define RC5_32_BLOCK            8
+# define RC5_32_KEY_LENGTH       16/* This is a default, max is 255 */
 
-typedef struct cast_key_st {
-    CAST_LONG data[32];
-    int short_key;              /* Use reduced rounds for short key */
-} CAST_KEY;
+/*
+ * This are the only values supported.  Tweak the code if you want more The
+ * most supported modes will be RC5-32/12/16 RC5-32/16/8
+ */
+# define RC5_8_ROUNDS    8
+# define RC5_12_ROUNDS   12
+# define RC5_16_ROUNDS   16
 
-# ifdef OPENSSL_FIPS
-void private_CAST_set_key(CAST_KEY *key, int len, const unsigned char *data);
-# endif
-void CAST_set_key(CAST_KEY *key, int len, const unsigned char *data);
-void CAST_ecb_encrypt(const unsigned char *in, unsigned char *out,
-                      const CAST_KEY *key, int enc);
-void CAST_encrypt(CAST_LONG *data, const CAST_KEY *key);
-void CAST_decrypt(CAST_LONG *data, const CAST_KEY *key);
-void CAST_cbc_encrypt(const unsigned char *in, unsigned char *out,
-                      long length, const CAST_KEY *ks, unsigned char *iv,
-                      int enc);
-void CAST_cfb64_encrypt(const unsigned char *in, unsigned char *out,
-                        long length, const CAST_KEY *schedule,
-                        unsigned char *ivec, int *num, int enc);
-void CAST_ofb64_encrypt(const unsigned char *in, unsigned char *out,
-                        long length, const CAST_KEY *schedule,
-                        unsigned char *ivec, int *num);
+typedef struct rc5_key_st {
+    /* Number of rounds */
+    int rounds;
+    RC5_32_INT data[2 * (RC5_16_ROUNDS + 1)];
+} RC5_32_KEY;
+
+void RC5_32_set_key(RC5_32_KEY *key, int len, const unsigned char *data,
+                    int rounds);
+void RC5_32_ecb_encrypt(const unsigned char *in, unsigned char *out,
+                        RC5_32_KEY *key, int enc);
+void RC5_32_encrypt(unsigned long *data, RC5_32_KEY *key);
+void RC5_32_decrypt(unsigned long *data, RC5_32_KEY *key);
+void RC5_32_cbc_encrypt(const unsigned char *in, unsigned char *out,
+                        long length, RC5_32_KEY *ks, unsigned char *iv,
+                        int enc);
+void RC5_32_cfb64_encrypt(const unsigned char *in, unsigned char *out,
+                          long length, RC5_32_KEY *schedule,
+                          unsigned char *ivec, int *num, int enc);
+void RC5_32_ofb64_encrypt(const unsigned char *in, unsigned char *out,
+                          long length, RC5_32_KEY *schedule,
+                          unsigned char *ivec, int *num);
 
 #ifdef  __cplusplus
 }
