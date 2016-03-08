@@ -78,6 +78,7 @@ add_subdirectory(libzip-1.0.1a)
 if(NOT EMSCRIPTEN)
     add_subdirectory(openssl-1.0.1s)
     add_subdirectory(curl-7.45.0)
+    add_dependencies(libcurl ssl)
 endif(NOT EMSCRIPTEN)
 
 # Ogg needs to be built before vorbis
