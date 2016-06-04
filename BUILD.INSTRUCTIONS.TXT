@@ -1,7 +1,7 @@
 WIN32:
 
-manually compile curl, see curl-7.45.0/winbuild
-cmake
+cmake -G"Visual Studio 12 Win64" ..
+msbuild Gameplay-deps.sln /property:Configuration=Release
 
 MACOSX:
 cmake -DCMAKE_OSX_DEPLOYMENT_TARGET=10.7 -DCMAKE_OSX_SYSROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk ..

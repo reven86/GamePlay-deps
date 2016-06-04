@@ -34,7 +34,7 @@ if( WIN32 AND NOT CYGWIN )
   add_definitions( -DWIN32_LEAN_AND_MEAN )
 
   # avoid conflict: ocsp.h and wincrypt.h
-  add_definitions( -D_WINDLL )
+  #add_definitions( -D_WINDLL )
 
 endif ( )
 

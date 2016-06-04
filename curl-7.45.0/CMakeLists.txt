@@ -124,6 +124,7 @@ mark_as_advanced(CURL_HIDDEN_SYMBOLS)
 
 IF(WIN32)
   OPTION(CURL_WINDOWS_SSPI "Use windows libraries to allow NTLM authentication without openssl" ON)
+  SET(CURL_WINDOWS_SSPI OFF)
   MARK_AS_ADVANCED(CURL_WINDOWS_SSPI)
 ENDIF()
 
