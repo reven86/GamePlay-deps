@@ -11,11 +11,6 @@ include(Configure_config.cmake)
 include_directories("${PROJECT_BINARY_DIR}/sigc++")
 include_directories("${PROJECT_SOURCE_DIR}")
 
-if(WIN32)
-    add_definitions(-D_ALLOW_KEYWORD_MACROS)
-    add_definitions(-Dnoexcept=)
-endif(WIN32)
-
 add_definitions(-std=c++11)
 IF(APPLE AND NOT IOS)
 add_definitions(-stdlib=libc++)

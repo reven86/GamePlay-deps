@@ -41,7 +41,7 @@ OPTION(ALSOFT_HRTF_DEFS "Install HRTF definition files" OFF)
 
 IF(WIN32)
     SET(LIBNAME OpenAL32)
-    ADD_DEFINITIONS("-D_WIN32 -D_WIN32_WINNT=0x0502")
+    ADD_DEFINITIONS("-D_WIN32 -D_WIN32_WINNT=0x0502 -D_TIMESPEC_DEFINED")
 
     # This option is mainly for static linking OpenAL Soft into another project
     # that already defines the IDs. It is up to that project to ensure all
@@ -432,7 +432,7 @@ IF(NOT HAVE_STRNCASECMP)
     ADD_DEFINITIONS(-Dstrncasecmp=_strnicmp)
 ENDIF()
 
-CHECK_FUNCTION_EXISTS(snprintf HAVE_SNPRINTF)
+CHECK_SYMBOL_EXISTS(snprintf stdio.h HAVE_SNPRINTF)
 IF(NOT HAVE_SNPRINTF)
     CHECK_FUNCTION_EXISTS(_snprintf HAVE__SNPRINTF)
     IF(NOT HAVE__SNPRINTF)
