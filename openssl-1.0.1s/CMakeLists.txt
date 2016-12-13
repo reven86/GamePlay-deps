@@ -28,6 +28,7 @@ project( openssl )
 cmake_minimum_required( VERSION 2.8.3 )
 
 add_definitions( -DOPENSSL_NO_ASM )
+add_definitions( -DOPENSSL_THREADS )
 
 if( WIN32 AND NOT CYGWIN )
   add_definitions( -DOPENSSL_SYSNAME_WIN32 )
