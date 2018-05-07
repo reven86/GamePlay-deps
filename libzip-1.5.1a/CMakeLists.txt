@@ -146,7 +146,7 @@ CHECK_INCLUDE_FILES(sys/types.h HAVE_SYS_TYPES_H_LIBZIP)
 # this test does not find __progname even when it exists
 #CHECK_SYMBOL_EXISTS(__progname stdlib.h HAVE___PROGNAME)
 
-IF(NOT IOS)
+IF(NOT IOS AND NOT EMSCRIPTEN)
 CHECK_TYPE_SIZE(__int8 __INT8_LIBZIP)
 CHECK_TYPE_SIZE(int8_t INT8_T_LIBZIP)
 CHECK_TYPE_SIZE(uint8_t UINT8_T_LIBZIP)
