@@ -37,6 +37,11 @@ if(NOT ANDROID AND NOT IOS)
     ENDIF(APPLE)
 endif(NOT ANDROID AND NOT IOS)
 
+if(ANDROID)
+        string(TOLOWER ${CMAKE_SYSTEM_NAME} LOWER_SYSTEM_NAME)
+	set(LIBRARY_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/out/external-deps/lib/${LOWER_SYSTEM_NAME}/${ANDROID_ARCH_NAME}")
+endif(ANDROID)
+
 IF(NOT WIN32)
     # For Windows, let the user pick since we need to generate both Debug and
     # Release variants of all the libs.
