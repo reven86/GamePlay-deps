@@ -103,6 +103,8 @@ set(libpng_sources
   pngwrite.c
   pngwtran.c
   pngwutil.c
+  arm/arm_init.c
+  arm/filter_neon_intrinsics.c
 )
 if (IOS AND IOS_PLATFORM STREQUAL "OS")
 set_source_files_properties(filter_neon.S PROPERTIES COMPILE_FLAGS "-x assembler-with-cpp")
