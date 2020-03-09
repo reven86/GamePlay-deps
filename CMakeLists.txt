@@ -73,7 +73,7 @@ if (NOT APPLE)
     # We can safely skip GLEW and OpenAL for any Apple based platforms
     add_subdirectory(glew-1.10.0)
     if (NOT EMSCRIPTEN)
-        add_subdirectory(openal-1.16.0)
+        add_subdirectory(openal-1.20.1)
     endif(NOT EMSCRIPTEN)
 endif(NOT APPLE)
 
@@ -122,7 +122,7 @@ if (NOT APPLE)
     IF(WIN32)
         list(APPEND BUILD_TARGETS OpenAL32)
     ELSE(WIN32)
-        list(APPEND BUILD_TARGETS openal)
+        list(APPEND BUILD_TARGETS OpenAL)
     ENDIF(WIN32)
 endif(NOT APPLE)
 

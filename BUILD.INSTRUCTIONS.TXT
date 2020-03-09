@@ -17,13 +17,11 @@ cmake -DCMAKE_TOOLCHAIN_FILE=../cmake/ios.toolchain.cmake -DIOS_PLATFORM=SIMULAT
 make
 
 Android armeabi-v7a:
-export ANDROID_NDK=/path/to/ndk
-cmake -DCMAKE_TOOLCHAIN_FILE=../cmake/android.toolchain.cmake -DCMAKE_BUILD_TYPE=Release -DANDROID_ABI=armeabi-v7a -DANDROID_FORCE_ARM_BUILD=ON -DANDROID_STL=gnustl_static -DANDROID_STL_FORCE_FEATURES=ON -DANDROID_NATIVE_API_LEVEL=android-12 ..
+cmake -DCMAKE_TOOLCHAIN_FILE=~/Documents/Projects/android-ndk-r21/build/cmake/android.toolchain.cmake -DCMAKE_BUILD_TYPE=Release -DANDROID_ABI=armeabi-v7a -DANDROID_FORCE_ARM_BUILD=ON -DANDROID_STL=c++_static -DANDROID_NATIVE_API_LEVEL=android-16 ..
 make
 
 Android x86:
-export ANDROID_NDK=/path/to/ndk
-cmake -DCMAKE_TOOLCHAIN_FILE=../cmake/android.toolchain.cmake -DCMAKE_BUILD_TYPE=Release -DANDROID_ABI=x86 -DANDROID_FORCE_ARM_BUILD=ON -DANDROID_STL=gnustl_static -DANDROID_STL_FORCE_FEATURES=ON -DANDROID_NATIVE_API_LEVEL=android-12 ..
+cmake -DCMAKE_TOOLCHAIN_FILE=~/Documents/Projects/android-ndk-r21/build/cmake/android.toolchain.cmake -DCMAKE_BUILD_TYPE=Release -DANDROID_ABI=x86 -DANDROID_FORCE_ARM_BUILD=ON -DANDROID_STL=c++_static -DANDROID_NATIVE_API_LEVEL=android-16 ..
 make
 
 Emscripten:
