@@ -1,6 +1,6 @@
 WIN32:
 
-cmake -G"Visual Studio 15 Win64" ..
+cmake -G"Visual Studio 17 2022" ..
 msbuild Gameplay-deps.sln /property:Configuration=Release
 
 MACOSX:
