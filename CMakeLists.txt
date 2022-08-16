@@ -8,10 +8,9 @@ ENDIF(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND NOT ANDROID)
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Emscripten")
     SET(EMSCRIPTEN 1)
-    SET(BUILD_SHARED_LIBS 1)
-else()
-    SET(BUILD_SHARED_LIBS 0)
 endif(${CMAKE_SYSTEM_NAME} STREQUAL "Emscripten")
+    
+SET(BUILD_SHARED_LIBS 0)
 
 MESSAGE("Platform: ${CMAKE_SYSTEM_NAME} ${PLATFORM}")
 MESSAGE("Build shared: ${BUILD_SHARED_LIBS}")
@@ -77,13 +76,11 @@ add_subdirectory(yaml-0.1.5)
 add_subdirectory(libsigc++-2.6.1)
 add_subdirectory(jpeg-8d)
 
-if (NOT APPLE)
+if (NOT APPLE AND NOT EMSCRIPTEN)
     # We can safely skip GLEW and OpenAL for any Apple based platforms
     add_subdirectory(glew-1.10.0)
-    if (NOT EMSCRIPTEN)
-        add_subdirectory(openal-1.20.1)
-    endif(NOT EMSCRIPTEN)
-endif(NOT APPLE)
+    add_subdirectory(openal-1.20.1)
+endif(NOT APPLE AND NOT EMSCRIPTEN)
 
 # zlib must be built before png and curl
 add_subdirectory(zlib-1.2.8)
