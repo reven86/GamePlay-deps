@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.1)
 
 project(GamePlay-deps)
 
@@ -13,7 +13,7 @@ else()
     SET(BUILD_SHARED_LIBS 0)
 endif(${CMAKE_SYSTEM_NAME} STREQUAL "Emscripten")
 
-MESSAGE("Platform: ${CMAKE_SYSTEM_NAME}")
+MESSAGE("Platform: ${CMAKE_SYSTEM_NAME} ${PLATFORM}")
 MESSAGE("Build shared: ${BUILD_SHARED_LIBS}")
 MESSAGE("Configuration: ${CMAKE_BUILD_TYPE}")
 
@@ -36,6 +36,14 @@ if(NOT ANDROID AND NOT IOS)
         set(LIBRARY_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/out/external-deps/lib/${LOWER_SYSTEM_NAME}/${ARCH}")
     ENDIF(APPLE)
 endif(NOT ANDROID AND NOT IOS)
+
+if (IOS)
+    if (PLATFORM STREQUAL "OS64")
+        set(LIBRARY_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/out/external-deps/lib/ios/arm")
+    else (PLATFORM STREQUAL "OS64")
+	set(LIBRARY_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/out/external-deps/lib/ios/x86")
+    endif (PLATFORM STREQUAL "OS64")
+endif (IOS)
 
 if(ANDROID)
         string(TOLOWER ${CMAKE_SYSTEM_NAME} LOWER_SYSTEM_NAME)
@@ -93,7 +101,7 @@ add_subdirectory(ogg-1.3.2)
 add_subdirectory(vorbis-1.3.4)
 
 add_subdirectory(bullet-2.82-r2704)
-add_subdirectory(protobuf-3.21.5/cmake)
+add_subdirectory(protobuf-3.21.5)
 
 set(BUILD_TARGETS
     Box2D
@@ -113,18 +121,21 @@ set(BUILD_TARGETS
     sigcpp
     jpeg
     ssl
-    libcurl
     libprotobuf-lite
 )
 
-if (NOT APPLE)
-    list(APPEND BUILD_TARGETS GLEW)
-    IF(WIN32)
-        list(APPEND BUILD_TARGETS OpenAL32)
-    ELSE(WIN32)
-        list(APPEND BUILD_TARGETS OpenAL)
-    ENDIF(WIN32)
-endif(NOT APPLE)
+if (NOT EMSCRIPTEN)
+    list(APPEND BUILD_TARGETS libcurl)
+
+    if (NOT APPLE)
+        list(APPEND BUILD_TARGETS GLEW)
+        IF(WIN32)
+            list(APPEND BUILD_TARGETS OpenAL32)
+        ELSE(WIN32)
+            list(APPEND BUILD_TARGETS OpenAL)
+        ENDIF(WIN32)
+    endif(NOT APPLE)
+endif (NOT EMSCRIPTEN)
 
 if(WIN32)
     set(GAMEPLAY_DEPS gameplay-deps.lib)
