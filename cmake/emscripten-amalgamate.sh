@@ -25,23 +25,24 @@ fi
 echo "Using ar : $AR"
 echo "Amalgamating target static libs $TARGET"
 
-cd $TARGET
-mkdir tmp
-rm -f libgameplay-deps.a
-mv *.a ./tmp
+# emscripten doesn't really allow linking to one libgameplay-deps.a library
+# leave all separate libraries instead
 
-echo "create libgameplay-deps.a"
-for file in ./tmp/* ; do
-    if [ -e "$file" ];
-    then
-	$AR r libgameplay-deps.a $file
-        echo "addlib $file"
-    fi
-done
-echo "end"
+cd $TARGET
+#mkdir tmp
+#mv *.a ./tmp
+
+#echo "create libgameplay-deps.a"
+#for file in ./tmp/* ; do
+#    if [ -e "$file" ];
+#    then
+#	$AR r libgameplay-deps.a $file
+#        echo "addlib $file"
+#    fi
+#done
+#echo "end"
 
 # Clean up
-#emscripten does not support amalgamated archives so leave reps as they are
-rm -rf ./tmp
+#rm -rf ./tmp
 
 cd $CWD
