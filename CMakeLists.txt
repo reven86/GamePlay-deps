@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.1)
 
 project(GamePlay-deps)
 
@@ -8,12 +8,11 @@ ENDIF(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND NOT ANDROID)
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Emscripten")
     SET(EMSCRIPTEN 1)
-    SET(BUILD_SHARED_LIBS 1)
-else()
-    SET(BUILD_SHARED_LIBS 0)
 endif(${CMAKE_SYSTEM_NAME} STREQUAL "Emscripten")
+    
+SET(BUILD_SHARED_LIBS 0)
 
-MESSAGE("Platform: ${CMAKE_SYSTEM_NAME}")
+MESSAGE("Platform: ${CMAKE_SYSTEM_NAME} ${PLATFORM}")
 MESSAGE("Build shared: ${BUILD_SHARED_LIBS}")
 MESSAGE("Configuration: ${CMAKE_BUILD_TYPE}")
 
@@ -36,6 +35,14 @@ if(NOT ANDROID AND NOT IOS)
         set(LIBRARY_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/out/external-deps/lib/${LOWER_SYSTEM_NAME}/${ARCH}")
     ENDIF(APPLE)
 endif(NOT ANDROID AND NOT IOS)
+
+if (IOS)
+    if (PLATFORM STREQUAL "OS64")
+        set(LIBRARY_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/out/external-deps/lib/ios/arm")
+    else (PLATFORM STREQUAL "OS64")
+	set(LIBRARY_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/out/external-deps/lib/ios/x86")
+    endif (PLATFORM STREQUAL "OS64")
+endif (IOS)
 
 if(ANDROID)
         string(TOLOWER ${CMAKE_SYSTEM_NAME} LOWER_SYSTEM_NAME)
@@ -69,13 +76,11 @@ add_subdirectory(yaml-0.1.5)
 add_subdirectory(libsigc++-2.6.1)
 add_subdirectory(jpeg-8d)
 
-if (NOT APPLE)
+if (NOT APPLE AND NOT EMSCRIPTEN)
     # We can safely skip GLEW and OpenAL for any Apple based platforms
     add_subdirectory(glew-1.10.0)
-    if (NOT EMSCRIPTEN)
-        add_subdirectory(openal-1.20.1)
-    endif(NOT EMSCRIPTEN)
-endif(NOT APPLE)
+    add_subdirectory(openal-1.20.1)
+endif(NOT APPLE AND NOT EMSCRIPTEN)
 
 # zlib must be built before png and curl
 add_subdirectory(zlib-1.2.8)
@@ -93,7 +98,7 @@ add_subdirectory(ogg-1.3.2)
 add_subdirectory(vorbis-1.3.4)
 
 add_subdirectory(bullet-2.82-r2704)
-add_subdirectory(protobuf-3.21.5/cmake)
+add_subdirectory(protobuf-3.21.5)
 
 set(BUILD_TARGETS
     Box2D
@@ -113,18 +118,21 @@ set(BUILD_TARGETS
     sigcpp
     jpeg
     ssl
-    libcurl
     libprotobuf-lite
 )
 
-if (NOT APPLE)
-    list(APPEND BUILD_TARGETS GLEW)
-    IF(WIN32)
-        list(APPEND BUILD_TARGETS OpenAL32)
-    ELSE(WIN32)
-        list(APPEND BUILD_TARGETS OpenAL)
-    ENDIF(WIN32)
-endif(NOT APPLE)
+if (NOT EMSCRIPTEN)
+    list(APPEND BUILD_TARGETS libcurl)
+
+    if (NOT APPLE)
+        list(APPEND BUILD_TARGETS GLEW)
+        IF(WIN32)
+            list(APPEND BUILD_TARGETS OpenAL32)
+        ELSE(WIN32)
+            list(APPEND BUILD_TARGETS OpenAL)
+        ENDIF(WIN32)
+    endif(NOT APPLE)
+endif (NOT EMSCRIPTEN)
 
 if(WIN32)
     set(GAMEPLAY_DEPS gameplay-deps.lib)
