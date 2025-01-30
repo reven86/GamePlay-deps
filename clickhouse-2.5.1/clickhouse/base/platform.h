@@ -1,6 +1,6 @@
 #pragma once
 
-#if defined(__linux__)
+#if defined(__linux__) || defined(EMSCRIPTEN)
 #   define _linux_
 #elif defined(_WIN64)
 #   define _win64_
