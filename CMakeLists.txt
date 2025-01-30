@@ -99,6 +99,7 @@ add_subdirectory(vorbis-1.3.4)
 
 add_subdirectory(bullet-2.82-r2704)
 add_subdirectory(protobuf-3.21.5)
+add_subdirectory(clickhouse-2.5.1)
 
 set(BUILD_TARGETS
     Box2D
@@ -119,6 +120,7 @@ set(BUILD_TARGETS
     jpeg
     ssl
     libprotobuf-lite
+    clickhouse-cpp-lib
 )
 
 if (NOT EMSCRIPTEN)
@@ -126,11 +128,7 @@ if (NOT EMSCRIPTEN)
 
     if (NOT APPLE)
         list(APPEND BUILD_TARGETS GLEW)
-        IF(WIN32)
-            list(APPEND BUILD_TARGETS OpenAL32)
-        ELSE(WIN32)
-            list(APPEND BUILD_TARGETS OpenAL)
-        ENDIF(WIN32)
+        list(APPEND BUILD_TARGETS OpenAL)
     endif(NOT APPLE)
 endif (NOT EMSCRIPTEN)
 
