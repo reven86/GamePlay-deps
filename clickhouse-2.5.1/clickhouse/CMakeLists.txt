@@ -208,7 +208,7 @@ INSTALL(FILES types/type_parser.h DESTINATION include/clickhouse/types/)
 INSTALL(FILES types/types.h DESTINATION include/clickhouse/types/)
 
 IF (WITH_OPENSSL)
-    TARGET_LINK_LIBRARIES (clickhouse-cpp-lib OpenSSL::SSL)
+    #TARGET_LINK_LIBRARIES (clickhouse-cpp-lib OpenSSL::SSL)
 ENDIF ()
 
 IF (WIN32 OR MINGW)

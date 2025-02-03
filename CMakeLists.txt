@@ -86,7 +86,7 @@ endif(NOT APPLE AND NOT EMSCRIPTEN)
 add_subdirectory(zlib-1.2.8)
 add_subdirectory(png-1.6.15)
 add_subdirectory(libzip-1.5.1a)
-add_subdirectory(openssl-1.0.1s)
+add_subdirectory(openssl-1.1.1w)
 
 if(NOT EMSCRIPTEN)
     add_subdirectory(curl-7.49.1)
