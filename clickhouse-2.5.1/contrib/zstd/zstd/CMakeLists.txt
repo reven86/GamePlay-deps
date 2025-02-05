@@ -77,6 +77,7 @@ SET(Headers
 SET(ZSTD_LEGACY_SUPPORT true)
 
 IF (ANDROID)
+    ADD_DEFINITIONS(-D ZSTD_DISABLE_ASM=1)
     LIST (REMOVE_ITEM Sources decompress/huf_decompress_amd64.S)
 ENDIF (ANDROID)
 
