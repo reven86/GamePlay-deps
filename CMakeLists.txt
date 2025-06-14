@@ -57,6 +57,10 @@ IF(NOT WIN32)
     ENDIF(NOT DEFINED CMAKE_BUILD_TYPE)
 ENDIF(NOT WIN32)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${LIBRARY_OUTPUT_PATH})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${LIBRARY_OUTPUT_PATH})
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${LIBRARY_OUTPUT_PATH})
+
 file(MAKE_DIRECTORY ${LIBRARY_OUTPUT_PATH})
 message(STATUS "Directory: ${LIBRARY_OUTPUT_PATH}")
 
@@ -71,7 +75,7 @@ ENDIF(BUILD_EXTRA_LIBS)
 add_subdirectory(Box2D-2.3.0)
 
 add_subdirectory(tinyxml2-2.1.0)
-add_subdirectory(lua-5.2.3)
+add_subdirectory(lua-5.4.8)
 add_subdirectory(yaml-0.1.5)
 add_subdirectory(libsigc++-2.6.1)
 add_subdirectory(jpeg-8d)
@@ -100,6 +104,21 @@ add_subdirectory(vorbis-1.3.4)
 add_subdirectory(bullet-2.82-r2704)
 add_subdirectory(protobuf-3.21.5)
 add_subdirectory(clickhouse-2.5.1)
+add_subdirectory(freetype-2.13.3)
+add_library(Freetype::Freetype ALIAS freetype)
+
+set(LUNASVG_BUILD_EXAMPLES OFF CACHE BOOL "Build examples" FORCE)
+set(PLUTOVG_BUILD_EXAMPLES OFF CACHE BOOL "Build examples" FORCE)
+add_subdirectory(lunasvg-3.3.0)
+
+set(RMLUI_LUA_BINDINGS ON CACHE BOOL "Enable Lua bindings" FORCE)
+set(RMLUI_SVG_PLUGIN ON CACHE BOOL "Enable plugin for SVG images. Requires the lunasvg library." FORCE)
+
+# Tell RmlUi where to find our built Lua
+set(LUA_LIBRARIES lua CACHE INTERNAL "Lua library target")
+set(LUA_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/lua-5.4.8/src" CACHE INTERNAL "Lua includes")
+
+add_subdirectory(RmlUi-6.1)
 
 set(BUILD_TARGETS
     Box2D
@@ -121,6 +140,11 @@ set(BUILD_TARGETS
     ssl
     libprotobuf-lite
     clickhouse-cpp-lib
+    freetype
+    lunasvg
+    rmlui_core
+    rmlui_debugger
+    rmlui_lua
 )
 
 if (NOT EMSCRIPTEN)
@@ -152,13 +176,13 @@ elseif(WIN32)
     # Windows
     add_custom_command(
         OUTPUT ${GAMEPLAY_DEPS}
-	COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/cmake/msvc-amalgamate.bat ${LIBRARY_OUTPUT_PATH}/${CMAKE_CFG_INTDIR}
+        COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/cmake/msvc-amalgamate.bat ${LIBRARY_OUTPUT_PATH}/${CMAKE_CFG_INTDIR}
     )
 else()
     # Emscripten
     add_custom_command(
         OUTPUT ${GAMEPLAY_DEPS}
-	COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/cmake/emscripten-amalgamate.sh ${CMAKE_AR} ${LIBRARY_OUTPUT_PATH}
+        COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/cmake/emscripten-amalgamate.sh ${CMAKE_AR} ${LIBRARY_OUTPUT_PATH}
     )
 endif(LINUX OR ANDROID)
 
