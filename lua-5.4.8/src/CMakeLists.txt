@@ -6,9 +6,13 @@ if(LINUX)
     add_definitions(-DLUA_USE_LINUX)
 endif(LINUX)
 
-if(APPLE AND NOT IOS)
-    add_definitions(-DLUA_USE_MACOSX)
-endif(APPLE AND NOT IOS)
+if(APPLE)
+    if (IOS)
+        add_definitions(-DLUA_USE_IOS)
+    else(IOS)
+        add_definitions(-DLUA_USE_MACOSX)
+    endif(IOS)
+endif(APPLE)
 
 set(LUA_PUBLIC_HEADERS lua.h luaconf.h lualib.h lauxlib.h lua.hpp)
 
