@@ -1,4 +1,3 @@
-cmake_policy(VERSION 2.6)
 
 project(tinyxml2)
 include(GNUInstallDirs)
