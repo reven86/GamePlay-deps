@@ -1,4 +1,5 @@
 # Minimal CMake project for building a static library under Windows.
+cmake_minimum_required(VERSION 3.10)
 
 project (yaml C)
 

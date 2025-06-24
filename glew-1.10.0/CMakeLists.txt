@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.10)
+
 
 add_library(GLEW src/glew.c)
 include_directories(include)

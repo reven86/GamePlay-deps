@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.10)
+
 SUBDIRS( Serialize ConvexDecomposition HACD GIMPACTUtils )
 
 #Maya Dynamica plugin is moved to http://dynamica.googlecode.com

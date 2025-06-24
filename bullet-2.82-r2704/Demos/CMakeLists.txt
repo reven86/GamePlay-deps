@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 3.10)
 
 IF (USE_DX11 AND BUILD_MULTITHREADING)
 	SUBDIRS(DX11ClothDemo)

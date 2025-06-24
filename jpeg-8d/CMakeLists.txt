@@ -3,6 +3,8 @@
 # Redistribution and use of this file is allowed according to the terms of the MIT license.
 # For details see the COPYRIGHT file distributed with LuaDist.
 # Please note that the package source code is licensed under its own license.
+cmake_minimum_required(VERSION 3.10)
+
 
 project ( libjpeg C )
 include ( cmake/dist.cmake )

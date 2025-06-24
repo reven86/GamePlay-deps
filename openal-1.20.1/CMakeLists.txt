@@ -1,5 +1,7 @@
 # CMake build file list for OpenAL
 
+cmake_minimum_required(VERSION 3.10)
+
 PROJECT(OpenAL)
 
 IF(COMMAND CMAKE_POLICY)

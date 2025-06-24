@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.10)
+
 set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS true)
 
 #this line has to appear before 'PROJECT' in order to be able to disable incremental linking

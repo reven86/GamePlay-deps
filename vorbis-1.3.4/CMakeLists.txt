@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 3.10)
 
 set(VORBIS_PUBLIC_HEADERS include/vorbis/codec.h include/vorbis/vorbisenc.h include/vorbis/vorbisfile.h)
 

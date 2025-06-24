@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.10)
+
 set(BOX2D_VERSION 2.1.0)
 set(BOX2D_BUILD_STATIC true)
 set(BOX2D_DIR ../../../Box2D)

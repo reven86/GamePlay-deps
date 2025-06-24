@@ -1,6 +1,8 @@
 # TODO:
 # create usable libtool .la file
 
+cmake_minimum_required(VERSION 3.10)
+
 SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 
 PROJECT(libzip C)

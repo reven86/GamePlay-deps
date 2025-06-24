@@ -6,6 +6,8 @@
 # For conditions of distribution and use, see the disclaimer
 # and license in png.h
 
+cmake_minimum_required(VERSION 3.10)
+
 set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS true)
 
 set(CMAKE_CONFIGURATION_TYPES "Release;Debug;MinSizeRel;RelWithDebInfo")
