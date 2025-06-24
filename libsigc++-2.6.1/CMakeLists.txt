@@ -1,5 +1,4 @@
 project(libsigc++)
-cmake_minimum_required(VERSION 2.8)
 
 set(PACKAGE_VERSION "2.6.1")
 set(SIGCXX_MAJOR_VERSION "2")

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.11)
 
 project(GamePlay-deps)
 
@@ -120,6 +120,14 @@ set(LUA_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/lua-5.4.8/src" CACHE INTERNAL "Lua in
 
 add_subdirectory(RmlUi-6.1)
 
+include(FetchContent)
+
+FetchContent_Declare(
+  fmt
+  GIT_REPOSITORY https://github.com/fmtlib/fmt
+  GIT_TAG        11.2.0)
+FetchContent_MakeAvailable(fmt)
+
 set(BUILD_TARGETS
     Box2D
     BulletDynamics
@@ -145,6 +153,7 @@ set(BUILD_TARGETS
     rmlui_core
     rmlui_debugger
     rmlui_lua
+    fmt::fmt
 )
 
 if (NOT EMSCRIPTEN)

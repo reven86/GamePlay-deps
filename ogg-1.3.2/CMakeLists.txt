@@ -1,4 +1,3 @@
-cmake_minimum_required(VERSION 2.8)
 
 set(OGG_SRC src/framing.c src/bitwise.c)
 set(OGG_PUBLIC_HEADERS include/ogg/ogg.h include/ogg/os_types.h)
