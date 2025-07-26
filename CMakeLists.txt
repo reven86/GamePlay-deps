@@ -118,8 +118,6 @@ set(RMLUI_SVG_PLUGIN ON CACHE BOOL "Enable plugin for SVG images. Requires the l
 set(LUA_LIBRARIES lua CACHE INTERNAL "Lua library target")
 set(LUA_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/lua-5.4.8/src" CACHE INTERNAL "Lua includes")
 
-add_subdirectory(RmlUi-6.1)
-
 include(FetchContent)
 
 FetchContent_Declare(
@@ -150,11 +148,16 @@ set(BUILD_TARGETS
     clickhouse-cpp-lib
     freetype
     lunasvg
-    rmlui_core
-    rmlui_debugger
-    rmlui_lua
     fmt::fmt
 )
+
+# build RmlUi for windows separately (to allow making changes there and push to upstream)
+if (NOT WIN32)
+    add_subdirectory(RmlUi-6.1)
+    list(APPEND BUILD_TARGETS rmlui_core)
+    list(APPEND BUILD_TARGETS rmlui_debugger)
+    list(APPEND BUILD_TARGETS rmlui_lua)
+endif (NOT WIN32)
 
 if (NOT EMSCRIPTEN)
     list(APPEND BUILD_TARGETS libcurl)
