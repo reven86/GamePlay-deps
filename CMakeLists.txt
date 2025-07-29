@@ -104,6 +104,21 @@ add_subdirectory(vorbis-1.3.4)
 add_subdirectory(bullet-2.82-r2704)
 add_subdirectory(protobuf-3.21.5)
 add_subdirectory(clickhouse-2.5.1)
+
+set(HB_BUILD_TESTS OFF CACHE BOOL "Disable HarfBuzz tests")
+set(HB_HAVE_FREETYPE OFF CACHE BOOL "Disable HarfBuzz's FreeType integration")
+set(HB_HAVE_ICU OFF CACHE BOOL "Disable ICU integration")
+set(HB_BUILD_SUBSET OFF CACHE BOOL "Disable HB Subset")
+
+add_subdirectory(harfbuzz-11.3.3)
+
+# Bypass find_package by pre-setting variables
+set(HarfBuzz_FOUND TRUE)
+set(HarfBuzz_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/harfbuzz-11.3.3/src")
+set(HarfBuzz_LIBRARY harfbuzz)
+set(FT_REQUIRE_HARFBUZZ ON)
+set(FT_DYNAMIC_HARFBUZZ OFF)
+
 add_subdirectory(freetype-2.13.3)
 add_library(Freetype::Freetype ALIAS freetype)
 
@@ -146,6 +161,7 @@ set(BUILD_TARGETS
     ssl
     libprotobuf-lite
     clickhouse-cpp-lib
+    harfbuzz
     freetype
     lunasvg
     fmt::fmt
