@@ -108,7 +108,7 @@ add_subdirectory(clickhouse-2.5.1)
 set(HB_BUILD_TESTS OFF CACHE BOOL "Disable HarfBuzz tests")
 set(HB_HAVE_FREETYPE OFF CACHE BOOL "Disable HarfBuzz's FreeType integration")
 set(HB_HAVE_ICU OFF CACHE BOOL "Disable ICU integration")
-set(HB_BUILD_SUBSET OFF CACHE BOOL "Disable HB Subset")
+set(HB_BUILD_SUBSET OFF CACHE BOOL "Disable HB Subset" FORCE)
 
 add_subdirectory(harfbuzz-11.3.3)
 
