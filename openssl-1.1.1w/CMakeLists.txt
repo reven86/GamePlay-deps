@@ -116,6 +116,7 @@ else()
 endif()
 add_definitions( "-DOPENSSLDIR=\"${OPENSSLDIR}\"" )
 add_definitions( "-DENGINESDIR=\"${ENGINESDIR}\"" )
+add_definitions( -DOPENSSL_NO_FILENAMES )
 
 if( APPLE )
   set( CMAKE_MACOSX_RPATH ON )
