@@ -68,13 +68,17 @@ IF(ANDROID)
     add_definitions(-include "string.h")
 ENDIF(ANDROID)
 
+add_compile_options(
+    "$<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>"
+)
+
 IF(BUILD_EXTRA_LIBS)
-    add_subdirectory(sqlite-3.8.7)
+    #add_subdirectory(sqlite-3.8.7)
 ENDIF(BUILD_EXTRA_LIBS)
 
-add_subdirectory(Box2D-2.3.0)
+#add_subdirectory(Box2D-2.3.0)
 
-add_subdirectory(tinyxml2-2.1.0)
+#add_subdirectory(tinyxml2-2.1.0)
 add_subdirectory(lua-5.4.8)
 add_subdirectory(yaml-0.1.5)
 add_subdirectory(libsigc++-2.6.1)
@@ -98,12 +102,13 @@ if(NOT EMSCRIPTEN)
 endif(NOT EMSCRIPTEN)
 
 # Ogg needs to be built before vorbis
-add_subdirectory(ogg-1.3.2)
-add_subdirectory(vorbis-1.3.4)
+#add_subdirectory(ogg-1.3.2)
+#add_subdirectory(vorbis-1.3.4)
 
-add_subdirectory(bullet-2.82-r2704)
+#add_subdirectory(bullet-2.82-r2704)
 add_subdirectory(protobuf-3.21.5)
 add_subdirectory(clickhouse-2.5.1)
+target_compile_options(clickhouse-cpp-lib PRIVATE -frtti)
 
 set(HB_BUILD_TESTS OFF CACHE BOOL "Disable HarfBuzz tests")
 set(HB_HAVE_FREETYPE OFF CACHE BOOL "Disable HarfBuzz's FreeType integration")
@@ -128,6 +133,7 @@ add_subdirectory(lunasvg-3.3.0)
 
 set(RMLUI_LUA_BINDINGS ON CACHE BOOL "Enable Lua bindings" FORCE)
 set(RMLUI_SVG_PLUGIN ON CACHE BOOL "Enable plugin for SVG images. Requires the lunasvg library." FORCE)
+set(RMLUI_CUSTOM_RTTI ON CACHE BOOL "RmlUi Custom RTTI" FORCE)
 
 # Tell RmlUi where to find our built Lua
 set(LUA_LIBRARIES lua CACHE INTERNAL "Lua library target")
@@ -142,18 +148,18 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(fmt)
 
 set(BUILD_TARGETS
-    Box2D
-    BulletDynamics
-    LinearMath
-    BulletCollision
-    vorbisfile
-    vorbisenc
-    vorbis
-    ogg
+    #Box2D
+    #BulletDynamics
+    #LinearMath
+    #BulletCollision
+    #vorbisfile
+    #vorbisenc
+    #vorbis
+    #ogg
     png_static
     zlibstatic
     lua
-    tinyxml2static
+    #tinyxml2static
     yaml
     zip
     sigcpp
