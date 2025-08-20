@@ -24,7 +24,15 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential cmake ninja-build zip python3-pip
+        sudo apt-get install -y build-essential cmake ninja-build zip python3-pip \
+              libx11-dev \
+              libgl1-mesa-dev \
+              libglu1-mesa-dev \
+              libxext-dev \
+              libxrandr-dev \
+              libxinerama-dev \
+              libxcursor-dev \
+              libxi-dev
         pip3 install awscli
 
     - name: Configure CMake
@@ -203,7 +211,7 @@ jobs:
 
     - name: Upload to S3
       run: |
-        aws s3 cp $REPO_NAME-emscripten_mod.zip \
+        aws s3 cp $REPO_NAME-emscripten-mod.zip \
           s3://$S3_BUCKET/builds/ --endpoint-url=$S3_ENDPOINT
 
   deploy-summary:
