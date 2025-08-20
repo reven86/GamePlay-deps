@@ -90,7 +90,7 @@ jobs:
 
     - name: Package Android build
       run: |
-        cd build-android-${{ matrix.android_abi }}/out
+        cd out
         zip -r ../$REPO_NAME-android-${{ matrix.android_abi }}.zip .
 
     - name: Upload to S3
@@ -124,7 +124,7 @@ jobs:
 
     - name: Package iOS build
       run: |
-        cd build-ios/out
+        cd out
         zip -r ../$REPO_NAME-ios.zip .
 
     - name: Upload to S3
@@ -160,7 +160,7 @@ jobs:
 
     - name: Package Emscripten build
       run: |
-        cd build-emscripten/out
+        cd out
         zip -r ../$REPO_NAME-emscripten.zip .
 
     - name: Upload to S3
@@ -198,7 +198,7 @@ jobs:
 
     - name: Package Emscripten build
       run: |
-        cd build-emscripten/out
+        cd out
         zip -r ../$REPO_NAME-emscripten-mod.zip .
 
     - name: Upload to S3
