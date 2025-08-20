@@ -29,25 +29,25 @@ jobs:
 
     - name: Configure CMake
       run: |
-        cmake -B build-${{ matrix.build_type }} \
+        cmake -B build-linux \
               -S . \
               -DCMAKE_BUILD_TYPE=Release \
               -G Ninja
 
     - name: Build project
       run: |
-        cmake --build build-${{ matrix.build_type }} \
-              --config ${{ matrix.build_type }} \
+        cmake --build build-linux \
+              --config Release \
               --parallel $(nproc)
 
     - name: Package build
       run: |
         cd out
-        zip -r ../$REPO_NAME-linux-${{ matrix.build_type }}.zip .
+        zip -r ../$REPO_NAME-linux.zip .
 
     - name: Upload to S3
       run: |
-        aws s3 cp $REPO_NAME-linux-${{ matrix.build_type }}.zip \
+        aws s3 cp $REPO_NAME-linux.zip \
           s3://$S3_BUCKET/builds/ --endpoint-url=$S3_ENDPOINT
 
   build-android:
