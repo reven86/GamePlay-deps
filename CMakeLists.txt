@@ -102,10 +102,10 @@ if(NOT EMSCRIPTEN)
 endif(NOT EMSCRIPTEN)
 
 # Ogg needs to be built before vorbis
-#add_subdirectory(ogg-1.3.2)
-#add_subdirectory(vorbis-1.3.4)
+add_subdirectory(ogg-1.3.2)
+add_subdirectory(vorbis-1.3.4)
 
-#add_subdirectory(bullet-2.82-r2704)
+add_subdirectory(bullet-2.82-r2704)
 add_subdirectory(protobuf-3.21.5)
 add_subdirectory(clickhouse-2.5.1)
 target_compile_options(clickhouse-cpp-lib PRIVATE -frtti)
@@ -149,13 +149,13 @@ FetchContent_MakeAvailable(fmt)
 
 set(BUILD_TARGETS
     #Box2D
-    #BulletDynamics
-    #LinearMath
-    #BulletCollision
-    #vorbisfile
-    #vorbisenc
-    #vorbis
-    #ogg
+    BulletDynamics
+    LinearMath
+    BulletCollision
+    vorbisfile
+    vorbisenc
+    vorbis
+    ogg
     png_static
     zlibstatic
     lua
