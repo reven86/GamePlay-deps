@@ -16,9 +16,6 @@ env:
 jobs:
   build-linux:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        build_type: [Release]
     
     steps:
     - name: Checkout code
@@ -27,13 +24,14 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential cmake ninja-build zip awscli
+        sudo apt-get install -y build-essential cmake ninja-build zip python3-pip
+        pip3 install awscli
 
     - name: Configure CMake
       run: |
         cmake -B build-${{ matrix.build_type }} \
               -S . \
-              -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
+              -DCMAKE_BUILD_TYPE=Release \
               -G Ninja
 
     - name: Build project
@@ -65,7 +63,8 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential cmake ninja-build zip awscli
+        sudo apt-get install -y build-essential cmake ninja-build zip python3-pip
+        pip3 install awscli
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
@@ -143,7 +142,8 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential cmake ninja-build zip awscli
+        sudo apt-get install -y build-essential cmake ninja-build zip python3-pip
+        pip3 install awscli
 
     - name: Setup Emscripten
       uses: mymindstorm/setup-emsdk@v13
@@ -178,7 +178,8 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential cmake ninja-build zip awscli
+        sudo apt-get install -y build-essential cmake ninja-build zip python3-pip
+        pip3 install awscli
 
     - name: Setup Emscripten
       uses: mymindstorm/setup-emsdk@v13
@@ -207,7 +208,7 @@ jobs:
 
   deploy-summary:
     runs-on: ubuntu-latest
-    needs: [build-linux, build-android, build-ios, build-emscripten]
+    needs: [build-linux, build-android, build-ios, build-emscripten, build-emscripten-mod]
     
     steps:
     - name: Create deployment summary
