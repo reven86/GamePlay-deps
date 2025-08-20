@@ -8,11 +8,13 @@ on:
 env:
   S3_REGION: ${{ secrets.S3_REGION || 'eu-central-003' }}
   S3_BUCKET: ${{ secrets.S3_BUCKET }}
-  AWS_ENDPOINT: ${{ secrets.S3_ENDPOINT }}
+  S3_ENDPOINT: ${{ secrets.S3_ENDPOINT }}
+  REPO_NAME: ${{ github.event.repository.name }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
 
 jobs:
   build-linux:
-    if: false
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -25,7 +27,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential cmake ninja-build zip
+        sudo apt-get install -y build-essential cmake ninja-build zip awscli
 
     - name: Configure CMake
       run: |
@@ -43,17 +45,12 @@ jobs:
     - name: Package build
       run: |
         cd out
-        zip -r ../${{ github.event.repository.name }}-linux-${{ matrix.build_type }}.zip .
+        zip -r ../$REPO_NAME-linux-${{ matrix.build_type }}.zip .
 
     - name: Upload to S3
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        aws-access-key-id: ${{ secrets.S3_ACCESS_KEY }}
-        aws-secret-access-key: ${{ secrets.S3_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.S3_REGION }}
       run: |
-        aws s3 cp ${{ github.event.repository.name }}-linux-${{ matrix.build_type }}.zip \
-          s3://${{ env.S3_BUCKET }}/builds/
+        aws s3 cp $REPO_NAME-linux-${{ matrix.build_type }}.zip \
+          s3://$S3_BUCKET/builds/ --endpoint-url=$S3_ENDPOINT
 
   build-android:
     runs-on: ubuntu-latest
@@ -64,6 +61,11 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential cmake ninja-build zip awscli
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
@@ -90,17 +92,12 @@ jobs:
     - name: Package Android build
       run: |
         cd build-android-${{ matrix.android_abi }}/out
-        zip -r ../${{ github.event.repository.name }}-android-${{ matrix.android_abi }}.zip .
+        zip -r ../$REPO_NAME-android-${{ matrix.android_abi }}.zip .
 
-    - name: Upload Android to S3
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        aws-access-key-id: ${{ secrets.S3_ACCESS_KEY }}
-        aws-secret-access-key: ${{ secrets.S3_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.S3_REGION }}
+    - name: Upload to S3
       run: |
-        aws s3 cp ${{ github.event.repository.name }}-android-${{ matrix.android_abi }}.zip \
-          s3://${{ env.S3_BUCKET }}/builds/
+        aws s3 cp $REPO_NAME-android-${{ matrix.android_abi }}.zip \
+          s3://$S3_BUCKET/builds/ --endpoint-url=$S3_ENDPOINT
 
   build-ios:
     runs-on: macos-latest
@@ -111,7 +108,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        brew install cmake ninja
+        brew install cmake ninja awscli
 
     - name: Configure iOS build
       run: |
@@ -129,17 +126,12 @@ jobs:
     - name: Package iOS build
       run: |
         cd build-ios/out
-        zip -r ../${{ github.event.repository.name }}-ios.zip .
+        zip -r ../$REPO_NAME-ios.zip .
 
-    - name: Upload iOS to S3
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        aws-access-key-id: ${{ secrets.S3_ACCESS_KEY }}
-        aws-secret-access-key: ${{ secrets.S3_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.S3_REGION }}
+    - name: Upload to S3
       run: |
-        aws s3 cp ${{ github.event.repository.name }}-ios.zip \
-          s3://${{ env.S3_BUCKET }}/builds/
+        aws s3 cp $REPO_NAME-ios.zip \
+          s3://$S3_BUCKET/builds/ --endpoint-url=$S3_ENDPOINT
 
   build-emscripten:
     runs-on: ubuntu-latest
@@ -147,6 +139,11 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential cmake ninja-build zip awscli
 
     - name: Setup Emscripten
       uses: mymindstorm/setup-emsdk@v13
@@ -164,17 +161,12 @@ jobs:
     - name: Package Emscripten build
       run: |
         cd build-emscripten/out
-        zip -r ../${{ github.event.repository.name }}-emscripten.zip .
+        zip -r ../$REPO_NAME-emscripten.zip .
 
-    - name: Upload Emscripten to S3
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        aws-access-key-id: ${{ secrets.S3_ACCESS_KEY }}
-        aws-secret-access-key: ${{ secrets.S3_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.S3_REGION }}
+    - name: Upload to S3
       run: |
-        aws s3 cp ${{ github.event.repository.name }}-emscripten.zip \
-          s3://${{ env.S3_BUCKET }}/builds/
+        aws s3 cp $REPO_NAME-emscripten.zip \
+          s3://$S3_BUCKET/builds/ --endpoint-url=$S3_ENDPOINT
 
   build-emscripten-mod:
     runs-on: ubuntu-latest
@@ -182,6 +174,11 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential cmake ninja-build zip awscli
 
     - name: Setup Emscripten
       uses: mymindstorm/setup-emsdk@v13
@@ -201,17 +198,12 @@ jobs:
     - name: Package Emscripten build
       run: |
         cd build-emscripten/out
-        zip -r ../${{ github.event.repository.name }}-emscripten-mod.zip .
+        zip -r ../$REPO_NAME-emscripten-mod.zip .
 
-    - name: Upload Emscripten to S3
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        aws-access-key-id: ${{ secrets.S3_ACCESS_KEY }}
-        aws-secret-access-key: ${{ secrets.S3_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.S3_REGION }}
+    - name: Upload to S3
       run: |
-        aws s3 cp ${{ github.event.repository.name }}-emscripten-mod.zip \
-          s3://${{ env.S3_BUCKET }}/builds/
+        aws s3 cp $REPO_NAME-emscripten_mod.zip \
+          s3://$S3_BUCKET/builds/ --endpoint-url=$S3_ENDPOINT
 
   deploy-summary:
     runs-on: ubuntu-latest
