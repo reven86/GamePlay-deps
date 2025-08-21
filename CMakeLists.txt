@@ -18,7 +18,13 @@ MESSAGE("Configuration: ${CMAKE_BUILD_TYPE}")
 
 if (ANDROID)
     set(ARCH ${ANDROID_ARCH_NAME})
-elseif(NOT IOS)
+elseif(IOS)
+    if (PLATFORM STREQUAL "OS64")
+        set(ARCH "arm")
+    else (PLATFORM STREQUAL "OS64")
+        set(ARCH "x86")
+    endif (PLATFORM STREQUAL "OS64")
+else(IOS)
     # Skip any introspection for cross-compiling targets
     include(${PROJECT_SOURCE_DIR}/cmake/TargetArch.cmake)
 
@@ -27,23 +33,8 @@ elseif(NOT IOS)
 endif(ANDROID)
 
 string(TOLOWER ${CMAKE_SYSTEM_NAME} LOWER_SYSTEM_NAME)
-set(CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}/out/external-deps")
-set(LIBRARY_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/out/external-deps/lib/${LOWER_SYSTEM_NAME}/${ARCH}")
-
-if(NOT ANDROID AND NOT IOS)
-    # Android and iOS toolchains will set their own output path
-    IF(APPLE)
-        set(LIBRARY_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/out/external-deps/lib/macosx/${ARCH}")
-    ENDIF(APPLE)
-endif(NOT ANDROID AND NOT IOS)
-
-if (IOS)
-    if (PLATFORM STREQUAL "OS64")
-        set(LIBRARY_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/out/external-deps/lib/ios/arm")
-    else (PLATFORM STREQUAL "OS64")
-        set(LIBRARY_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/out/external-deps/lib/ios/x86")
-    endif (PLATFORM STREQUAL "OS64")
-endif (IOS)
+set(CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}/out")
+set(LIBRARY_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/out/lib/${LOWER_SYSTEM_NAME}/${ARCH}")
 
 IF(NOT WIN32)
     # For Windows, let the user pick since we need to generate both Debug and
