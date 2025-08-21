@@ -77,10 +77,6 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
-    - name: Install NDK and CMake
-      run: |
-        sdkmanager "cmake;3.22.1" "ndk;26.3.11579264"
-
     - name: Configure Android build
       run: |
         cmake -B build-android-${{ matrix.android_abi }} \

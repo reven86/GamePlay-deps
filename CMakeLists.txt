@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.10...3.27)
 
 project(GamePlay-deps)
 
@@ -16,13 +16,15 @@ MESSAGE("Platform: ${CMAKE_SYSTEM_NAME} ${PLATFORM}")
 MESSAGE("Build shared: ${BUILD_SHARED_LIBS}")
 MESSAGE("Configuration: ${CMAKE_BUILD_TYPE}")
 
-if(NOT ANDROID AND NOT IOS)
+if (ANDROID)
+    set(ARCH ${ANDROID_ARCH_NAME})
+elseif(NOT IOS)
     # Skip any introspection for cross-compiling targets
     include(${PROJECT_SOURCE_DIR}/cmake/TargetArch.cmake)
 
     set(ARCH "unknown")
     target_architecture(ARCH)
-endif(NOT ANDROID AND NOT IOS)
+endif(ANDROID)
 
 string(TOLOWER ${CMAKE_SYSTEM_NAME} LOWER_SYSTEM_NAME)
 set(CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}/out/external-deps")
