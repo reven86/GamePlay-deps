@@ -94,7 +94,10 @@ add_subdirectory(ogg-1.3.2)
 add_subdirectory(vorbis-1.3.4)
 
 add_subdirectory(bullet-2.82-r2704)
+
+set(protobuf_MSVC_STATIC_RUNTIME OFF)
 add_subdirectory(protobuf-3.21.5)
+
 add_subdirectory(clickhouse-2.5.1)
 target_compile_options(clickhouse-cpp-lib PRIVATE -frtti)
 
