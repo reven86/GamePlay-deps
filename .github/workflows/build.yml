@@ -103,7 +103,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        brew install cmake ninja awscli
+        brew install ninja awscli
 
     - name: Configure iOS build
       run: |
