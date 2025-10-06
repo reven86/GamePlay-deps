@@ -165,12 +165,12 @@ set(BUILD_TARGETS
 )
 
 # build RmlUi for windows separately (to allow making changes there and push to upstream)
-if (NOT WIN32)
+# if (NOT WIN32)
     add_subdirectory(RmlUi-6.1)
     list(APPEND BUILD_TARGETS rmlui_core)
     list(APPEND BUILD_TARGETS rmlui_debugger)
     list(APPEND BUILD_TARGETS rmlui_lua)
-endif (NOT WIN32)
+# endif (NOT WIN32)
 
 if (NOT EMSCRIPTEN)
     list(APPEND BUILD_TARGETS libcurl)
