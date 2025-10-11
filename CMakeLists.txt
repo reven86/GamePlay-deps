@@ -28,8 +28,6 @@ elseif(IOS)
 else(IOS)
     # Skip any introspection for cross-compiling targets
     include(${PROJECT_SOURCE_DIR}/cmake/TargetArch.cmake)
-
-    set(ARCH "unknown")
     target_architecture(ARCH)
 endif(ANDROID)
 
