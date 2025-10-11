@@ -42,8 +42,8 @@ subject to the following restrictions:
 #define BT_SHUFFLE(x,y,z,w) ((w)<<6 | (z)<<4 | (y)<<2 | (x))
 //#define bt_pshufd_ps( _a, _mask ) (__m128) _mm_shuffle_epi32((__m128i)(_a), (_mask) )
 #define bt_pshufd_ps( _a, _mask ) _mm_shuffle_ps((_a), (_a), (_mask) )
-#define bt_splat3_ps( _a, _i ) bt_pshufd_ps((_a), BT_SHUFFLE(_i,_i,_i, 3) )
-#define bt_splat_ps( _a, _i )  bt_pshufd_ps((_a), BT_SHUFFLE(_i,_i,_i,_i) )
+#define bt_splat3_ps( _a, _i ) bt_pshufd_ps((_a), BT_SHUFFLE((_i)&0x3,(_i)&0x3,(_i)&0x3, 3) )
+#define bt_splat_ps( _a, _i )  bt_pshufd_ps((_a), BT_SHUFFLE((_i)&0x3,(_i)&0x3,(_i)&0x3,(_i)&0x3) )
 
 #define btv3AbsiMask (_mm_set_epi32(0x00000000, 0x7FFFFFFF, 0x7FFFFFFF, 0x7FFFFFFF))
 #define btvAbsMask (_mm_set_epi32( 0x7FFFFFFF, 0x7FFFFFFF, 0x7FFFFFFF, 0x7FFFFFFF))
