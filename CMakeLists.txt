@@ -73,6 +73,9 @@ add_subdirectory(jpeg-8d)
 if (NOT APPLE AND NOT EMSCRIPTEN)
     # We can safely skip GLEW and OpenAL for any Apple based platforms
     add_subdirectory(glew-1.10.0)
+    if(ANDROID AND CMAKE_HOST_WIN32)
+        set(ALSOFT_NATIVE_TOOLS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/build_windows_x64/openal-1.20.1/native-tools")
+    endif()
     add_subdirectory(openal-1.20.1)
 endif(NOT APPLE AND NOT EMSCRIPTEN)
 
@@ -164,7 +167,7 @@ set(BUILD_TARGETS
 
 # build RmlUi for windows separately (to allow making changes there and push to upstream)
 # if (NOT WIN32)
-    add_subdirectory(RmlUi-6.1)
+    add_subdirectory(RmlUi-6.2)
     list(APPEND BUILD_TARGETS rmlui_core)
     list(APPEND BUILD_TARGETS rmlui_debugger)
     list(APPEND BUILD_TARGETS rmlui_lua)
