@@ -185,7 +185,8 @@ jobs:
 
     - name: Build Emscripten
       run: |
-        cmake --build build-emscripten --parallel $(nproc)
+        #cmake --build build-emscripten --parallel $(nproc)
+        cmake --build build-emscripten
 
     - name: Package Emscripten build
       run: |
