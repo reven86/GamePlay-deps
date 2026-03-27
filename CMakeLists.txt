@@ -158,7 +158,6 @@ set(BUILD_TARGETS
     jpeg
     ssl
     libprotobuf-lite
-    clickhouse-cpp-lib
     harfbuzz
     freetype
     lunasvg
@@ -175,6 +174,7 @@ set(BUILD_TARGETS
 
 if (NOT EMSCRIPTEN)
     list(APPEND BUILD_TARGETS libcurl)
+    list(APPEND BUILD_TARGETS clickhouse-cpp-lib)
 
     if (NOT APPLE)
         list(APPEND BUILD_TARGETS GLEW)
