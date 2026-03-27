@@ -88,6 +88,9 @@ add_subdirectory(openssl-1.1.1w)
 if(NOT EMSCRIPTEN)
     add_subdirectory(curl-7.49.1)
     add_dependencies(libcurl ssl)
+
+    add_subdirectory(clickhouse-2.5.1)
+    target_compile_options(clickhouse-cpp-lib PRIVATE -frtti)
 endif(NOT EMSCRIPTEN)
 
 # Ogg needs to be built before vorbis
@@ -98,9 +101,6 @@ add_subdirectory(bullet-2.82-r2704)
 
 set(protobuf_MSVC_STATIC_RUNTIME OFF)
 add_subdirectory(protobuf-3.21.5)
-
-add_subdirectory(clickhouse-2.5.1)
-target_compile_options(clickhouse-cpp-lib PRIVATE -frtti)
 
 set(HB_BUILD_TESTS OFF CACHE BOOL "Disable HarfBuzz tests")
 set(HB_HAVE_FREETYPE OFF CACHE BOOL "Disable HarfBuzz's FreeType integration")
