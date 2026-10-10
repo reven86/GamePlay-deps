@@ -67,7 +67,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
+      uses: android-actions/setup-android@v4
 
     - name: Configure Android build
       run: |
@@ -166,7 +166,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        emscripten: [latest, 3.1.50]
+        emscripten: [latest]
     
     steps:
     - name: Setup Emscripten
